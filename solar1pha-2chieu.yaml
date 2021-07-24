@@ -1,0 +1,96 @@
+#Công tơ solar 1 pha - 2 chiều k-meter
+#Hướng dẫn: http://nhathongminh.net/cai-dat-mosquitto-broker-cho-hassio/
+
+#Dành cho Hassio khai báo
+anonymous: false
+customize:
+active: false
+folder: mosquitto
+certfile: fullchain.pem
+keyfile: privkey.pem
+require_certificate: false
+
+
+#Dành cho hassbian khai báo
+mqtt:
+  broker: 192.168.x.x (Địa chỉ ip hass hãy sửa lại)
+  port: 3883
+  username: admin (hãy sửa lại)
+  password: admin (hãy sửa lại)
+  protocol: 3.1.1
+  discovery: true
+  discovery_prefix: homeassistant
+
+
+#code mẫu copy đoạn code này dán vào file configuration.yaml
+#bán
+- platform: mqtt
+  name: "Công suất ivt"
+  state_topic: "k-meter"
+  value_template: "{{value_json.wivt}}"
+  unit_of_measurement: "W"
+  icon: mdi:flash-circle
+
+- platform: mqtt
+  name: "Công suất tải"
+  state_topic: "k-meter"
+  value_template: "{{value_json.w}}"
+  unit_of_measurement: "W"
+  icon: mdi:flash-circle
+
+- platform: mqtt
+  name: "Số hôm nay bán"
+  state_topic: "k-meter"
+  value_template: "{{value_json.dayngay}}"
+  unit_of_measurement: "kWh"
+
+- platform: mqtt
+  name: "Số hôm qua bán "
+  state_topic: "k-meter"
+  value_template: "{{value_json.dq}}"
+  unit_of_measurement: "kWh"
+- platform: mqtt
+  name: "Số tháng này bán "
+  state_topic: "k-meter"
+  value_template: "{{value_json.dt}}"
+  unit_of_measurement: "kWh"
+- platform: mqtt
+  name: "Số tháng trước bán "
+  state_topic: "k-meter"
+  value_template: "{{value_json.ttd}}"
+  unit_of_measurement: "kWh"
+  
+- platform: mqtt
+  name: "Kwh tổng bán"
+  state_topic: "k-meter"
+  value_template: "{{value_json.ds}}"
+  unit_of_measurement: "kWh"
+
+#mua
+- platform: mqtt
+  name: "Số hôm nay mua"
+  state_topic: "k-meter"
+  value_template: "{{value_json.keongay}}"
+  unit_of_measurement: "kWh"
+
+- platform: mqtt
+  name: "Số hôm qua mua "
+  state_topic: "k-meter"
+  value_template: "{{value_json.kq}}"
+  unit_of_measurement: "kWh"
+- platform: mqtt
+  name: "Số tháng này mua "
+  state_topic: "k-meter"
+  value_template: "{{value_json.kt}}"
+  unit_of_measurement: "kWh"
+- platform: mqtt
+  name: "Số tháng trước mua "
+  state_topic: "k-meter"
+  value_template: "{{value_json.ttk}}"
+  unit_of_measurement: "kWh"
+  
+- platform: mqtt
+  name: "Kwh tổng mua"
+  state_topic: "k-meter"
+  value_template: "{{value_json.ks}}"
+  unit_of_measurement: "kWh"
