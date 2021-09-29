@@ -1,0 +1,63 @@
+#Dành cho Hassio khai báo
+#Hướng dẫn: http://nhathongminh.net/cai-dat-mosquitto-broker-cho-hassio/
+
+anonymous: false
+customize:
+active: false
+folder: mosquitto
+certfile: fullchain.pem
+keyfile: privkey.pem
+require_certificate: false
+
+
+#Dành cho hassbian khai báo
+mqtt:
+  broker: 192.168.x.x (Địa chỉ ip hass hãy sửa lại)
+  port: 3883
+  username: admin (hãy sửa lại)
+  password: admin (hãy sửa lại)
+  protocol: 3.1.1
+  discovery: true
+  discovery_prefix: homeassistant
+
+#Copy đoạn code này dán vào file configuration.yaml (sửa topic đi)
+#Công tơ 1 pha sinh hoạt
+sensor:
+- platform: mqtt
+  name: "V1"
+  state_topic: "k-meter"
+  value_template: "{{ value_json.data[12] }}"
+  unit_of_measurement: "V"
+  icon: mdi:flash-circle 
+- platform: mqtt
+  name: "A1"
+  state_topic: "k-meter"
+  value_template: "{{ value_json.data[13] }}"
+  unit_of_measurement: "W"
+  
+//Hướng dẫn thứ tự data mqtt, thay thế số vào xx trong ngoặc vuông "value_json.data[xx]"
+0. số hôm nay ct1
+1. số hôm qua ct1
+2. số tháng này ct1
+3. số tháng trước ct1
+4. tiền tháng này ct1
+5. tiền tháng trước ct1
+6. số hôm nay ct2
+7. số hôm qua ct2
+8. số tháng này ct2
+9. số tháng trước ct2
+10. tiền tháng này ct2
+11. tiền tháng trước ct2
+12. Volt ct1
+13. Ampe ct1
+14. Công suất W ct1
+15. Tổng điện năng Kwh ct1
+16. Cosphi ct1
+17. Volt ct2
+18. Ampe ct2
+19. Công suất W ct2
+20. Tổng điện năng Kwh ct2
+21. Cosphi ct2
+22. Tần số F
+
+mqtt1="{\"data\":[\""+String(dhn1,2)+"\",\""+String(dhq1,2)+"\",\""+String(dtn1,2)+"\",\""+String(dtt1,2)+"\",\""+String(ttn1,0)+"\",\""+String(ttt1,0)+"\",\""+String(dhn2,2)+"\",\""+String(dhq2,2)+"\",\""+String(dtn2,2)+"\",\""+String(dtt2,2)+"\",\""+String(ttn2,2)+"\",\""+String(ttt2,2)+"\",\""+String(v1,1)+"\",\""+String(a1,3)+"\",\""+String(w1,0)+"\",\""+String(wh1,2)+"\",\""+String(p1,2)+"\",\""+String(v2,1)+"\",\""+String(a2,3)+"\",\""+String(wh2,3)+"\",\""+String(p2,2)+"\",\""+String(f1,1)+"\"]}";
