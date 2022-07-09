@@ -9,7 +9,7 @@
 #define USE_WEMOS_D1_MINI
 unsigned long times = 0;
 int key1,key2;
-
+#include "BlynkEdgent.h
 void setup()
 {
   Serial.begin(9600);
